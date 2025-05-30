@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal EHS - Dashboard Central</title>
+    <link rel="stylesheet" href="ehs-portal.css">
+    
+</head>
+<body>
+    <div class="portal-container">
+        <div class="header">
+            <h1>Portal EHS</h1>
+            <p>Sistema de Gestão de Segurança</p>
+        </div>
+
+        <div class="quick-stats">
+            <div class="quick-stats-title">Resumo Maio 2025</div>
+            <div class="stats-grid">
+                <div class="quick-stat-item">
+                    <div class="quick-stat-value">153</div>
+                    <div class="quick-stat-label">Desvios</div>
+                </div>
+                <div class="quick-stat-item">
+                    <div class="quick-stat-value">12</div>
+                    <div class="quick-stat-label">Diálogos</div>
+                </div>
+                <div class="quick-stat-item">
+                    <div class="quick-stat-value">40</div>
+                    <div class="quick-stat-label">Inspeções</div>
+                </div>
+                <div class="quick-stat-item">
+                    <div class="quick-stat-value">0</div>
+                    <div class="quick-stat-label">Quase Acidentes</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+            <a href="desvios.html" class="dashboard-card" onclick="acessarDesvios()" target="_blank">
+                <div class="card-icon">⚠️</div>
+                <h2 class="card-title">Desvios</h2>
+                <p class="card-description">
+                    Acompanhe e analise todos os desvios de segurança, 
+                    comportamentos inseguros e condições inseguras identificadas pela equipe.
+                </p>
+                <div class="card-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">153</div>
+                        <div class="stat-label">Maio 2025</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">3.526</div>
+                        <div class="stat-label">Total 2024-25</div>
+                    </div>
+                </div>
+                <button class="access-btn">Acessar Dashboard</button>
+            </a>
+
+            <a href="dialogo-e-inspecoes.html" class="dashboard-card" onclick="acessarInspecoes()" target="_blank">
+                <div class="card-icon">🔍</div>
+                <h2 class="card-title">Diálogos e Inspeções</h2>
+                <p class="card-description">
+                    Visualize dados sobre diálogos comportamentais e inspeções de segurança 
+                    realizadas pela equipe EHS.
+                </p>
+                <div class="card-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">12</div>
+                        <div class="stat-label">Diálogos Maio</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">40</div>
+                        <div class="stat-label">Inspeções Maio</div>
+                    </div>
+                </div>
+                <button class="access-btn">Acessar Dashboard</button>
+            </a>
+        </div>
+
+        <div class="footer">
+            <p>&copy; 2025 Sistema EHS Dashboard - Todos os direitos reservados</p>
+            <p>Última atualização: Maio 2025</p>
+            <p>Criado por Gilvando Santana</p>
+        </div>
+    </div>
+
+</body>
+</html>

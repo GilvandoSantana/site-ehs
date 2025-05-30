@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard EHS - Diálogos e Inspeções - Maio 2025</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <link rel="stylesheet" href="dialogo-e-inspecoes.css">
+    
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="header">
+            <h1>Dashboard EHS</h1>
+            <p>Relatório de Diálogos Comportamentais e Inspeções - Maio 2025</p>
+        </div>
+
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-value">12</div>
+                <div class="metric-label">Diálogos Maio 2025</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">203</div>
+                <div class="metric-label">Total Diálogos 2024-2025</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">40</div>
+                <div class="metric-label">Inspeções Maio 2025</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">313</div>
+                <div class="metric-label">Total Inspeções 2024-2025</div>
+            </div>
+        </div>
+
+        <div class="charts-grid">
+            <div class="chart-container large-chart">
+                <div class="chart-title">Evolução Mensal - Diálogos Comportamentais (2024-2025)</div>
+                <canvas id="dialogosChart"></canvas>
+            </div>
+        </div>
+
+        <div class="charts-grid">
+            <div class="chart-container large-chart">
+                <div class="chart-title">Evolução Mensal - Inspeções (2024-2025)</div>
+                <canvas id="inspecoesChart"></canvas>
+            </div>
+        </div>
+
+        <div class="performance-cards">
+            <div class="performance-card">
+                <div class="performance-header">
+                    <div class="performance-title">Diálogos - Maio 2025</div>
+                    <div class="performance-total">12</div>
+                </div>
+                <div class="member-list">
+                    <div class="member-item"><span class="member-name">GILVANDO</span><span class="member-count">11</span></div>
+                    <div class="member-item"><span class="member-name">ALEXSANDRO</span><span class="member-count">1</span></div>
+                    <div class="member-item"><span class="member-name">EDENILDES</span><span class="member-count">0</span></div>
+                </div>
+            </div>
+
+            <div class="performance-card">
+                <div class="performance-header">
+                    <div class="performance-title">Inspeções - Maio 2025</div>
+                    <div class="performance-total">40</div>
+                </div>
+                <div class="member-list">
+                    <div class="member-item"><span class="member-name">GILVANDO</span><span class="member-count">31</span></div>
+                    <div class="member-item"><span class="member-name">EDENILDES</span><span class="member-count">6</span></div>
+                    <div class="member-item"><span class="member-name">ALEXSANDRO</span><span class="member-count">3</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="data-table">
+            <div class="table-header">
+                <div class="table-title">Histórico Completo - Diálogos Comportamentais por Pessoa</div>
+            </div>
+            <div class="table-content">
+                <div class="data-grid">
+                    <div class="data-item">
+                        <div class="data-name">ALEXSANDRO</div>
+                        <div class="data-year">2024</div>
+                        <div class="data-value">17</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-name">BRUNO</div>
+                        <div class="data-year">2024</div>
+                        <div class="data-value">36</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-name">EDENILDES</div>
+                        <div class="data-year">2024</div>
+                        <div class="data-value">15</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-name">GILVANDO</div>
+                        <div class="data-year">2024</div>
+                        <div class="data-value">42</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-name">GUSTAVO</div>
+                        <div class="data-year">2024</div>
+                        <div class="data-value">36</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-name">LUCAS</div>
+                        <div class="data-year">2024</div>
+                        <div class="data-value">4</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-name">ALEXSANDRO</div>
+                        <div class="data-year">2025</div>
+                        <div class="data-value">5</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-name">EDENILDES</div>
+                        <div class="data-year">2025</div>
+                        <div class="data-value">11</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-name">GILVANDO</div>
+                        <div class="data-year">2025</div>
+                        <div class="data-value">37</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="data-table">
+            <div class="table-header">
+                <div class="table-title">Histórico Completo - Inspeções por Pessoa</div>
+            </div>
+            <div class="table-content">
+                <div class="data-grid">
+                    <div class="data-item">
+                        <div class="data-name">ALEXSANDRO</div>
+                        <div class="data-year">2024</div>
+                        <div class="data-value">25</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-name">BRUNO</div>
+                        <div class="data-year">2024</div>
+                        <div class="data-value">27</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-name">EDENILDES</div>
+                        <div class="data-year">2024</div>
+                        <div class="data-value">20</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-name">GILVANDO</div>
+                        <div class="data-year">2024</div>
+                        <div class="data-value">53</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-name">GUSTAVO</div>
+                        <div class="data-year">2024</div>
+                        <div class="data-value">46</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-name">LUCAS</div>
+                        <div class="data-year">2024</div>
+                        <div class="data-value">4</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-name">ALEXSANDRO</div>
+                        <div class="data-year">2025</div>
+                        <div class="data-value">20</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-name">EDENILDES</div>
+                        <div class="data-year">2025</div>
+                        <div class="data-value">31</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-name">GILVANDO</div>
+                        <div class="data-year">2025</div>
+                        <div class="data-value">87</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-stats">
+            <div class="footer-title">Totais Consolidados (2024-2025)</div>
+            <div class="totals-grid">
+                <div class="total-item">
+                    <div class="total-label">Total Diálogos</div>
+                    <div class="total-value">203</div>
+                </div>
+                <div class="total-item">
+                    <div class="total-label">Total Inspeções</div>
+                    <div class="total-value">313</div>
+                </div>
+                <div class="total-item">
+                    <div class="total-label">Atividades Totais</div>
+                    <div class="total-value">516</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+            <p>&copy; 2025 Sistema EHS Dashboard - Todos os direitos reservados</p>
+            <p>Última atualização: Maio 2025</p>
+            <p>Criado por Gilvando Santana</p>
+    </div>
+
+    <script>
+        // Configuração global do Chart.js
+        Chart.defaults.color = '#ffffff';
+        Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+        Chart.defaults.backgroundColor = 'rgba(255, 255, 255, 0.05)';
+
+        // Gráfico de evolução dos diálogos comportamentais
+        const dialogosCtx = document.getElementById('dialogosChart').getContext('2d');
+        new Chart(dialogosCtx, {
+            type: 'line',
+            data: {
+                labels: ['Mar 2024', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez', 'Jan 2025', 'Fev', 'Mar', 'Abr', 'Mai'],
+                datasets: [{
+                    label: 'Diálogos Comportamentais',
+                    data: [12, 12, 31, 7, 9, 11, 15, 11, 15, 14, 14, 21, 12, 7, 12],
+                    borderColor: '#4ecdc4',
+                    backgroundColor: 'rgba(78, 205, 196, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#4ecdc4',
+                    pointBorderColor: '#ffffff',
+                    pointBorderWidth: 2,
+                    pointRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#ffffff',
+                            font: { size: 14 }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                        ticks: { color: '#ffffff' }
+                    },
+                    x: {
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                        ticks: { color: '#ffffff' }
+                    }
+                }
+            }
+        });
+
+        // Gráfico de evolução das inspeções
+        const inspecoesCtx = document.getElementById('inspecoesChart').getContext('2d');
+        new Chart(inspecoesCtx, {
+            type: 'line',
+            data: {
+                labels: ['Mar 2024', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez', 'Jan 2025', 'Fev', 'Mar', 'Abr', 'Mai'],
+                datasets: [{
+                    label: 'Inspeções',
+                    data: [12, 40, 5, 24, 32, 20, 12, 19, 10, 20, 22, 13, 19, 37, 6],
+                    borderColor: '#00d4ff',
+                    backgroundColor: 'rgba(0, 212, 255, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#00d4ff',
+                    pointBorderColor: '#ffffff',
+                    pointBorderWidth: 2,
+                    pointRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#ffffff',
+                            font: { size: 14 }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                        ticks: { color: '#ffffff' }
+                    },
+                    x: {
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                        ticks: { color: '#ffffff' }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
