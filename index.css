@@ -106,6 +106,12 @@
             color: #00d4ff;
             margin-bottom: 20px;
             text-align: center;
+            text-align: center;
+        }
+
+        .img-icon {
+            width:70px;
+            height:70px;
         }
 
         .menu-title {
