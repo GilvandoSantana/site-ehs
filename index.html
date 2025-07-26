@@ -3,117 +3,294 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Controle EHS do Canteiro LOM</title>
+    <title>Login - Sistema EHS Dashboard</title>
     <link rel="stylesheet" href="index.css">
-    <style>
+    <style >
         
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="background-animation" id="backgroundAnimation"></div>
+    
+    <div class="login-container">
+        <div class="logo-section">
+            <div class="logo-icon"></div>
+            <h1 class="login-title">Sistema EHS</h1>
+            <p class="login-subtitle">Dashboard de Segurança</p>
+        </div>
+
+        <form id="loginForm">
+            <div class="form-group">
+                <label class="form-label" for="email">Email</label>
+                <input type="email" id="email" name="email" class="form-input" 
+                       placeholder="Digite seu email corporativo" required>
+            </div>
+
+            <div class="form-group" style="position: relative;">
+                <label class="form-label" for="password">Senha</label>
+                <input type="password" id="password" name="password" class="form-input" 
+                       placeholder="Digite sua senha" required>
+                <button type="button" class="password-toggle" onclick="togglePassword()">👁️</button>
+            </div>
+
+            <div class="form-options">
+                <label class="remember-me">
+                    <input type="checkbox" id="remember">
+                    Lembrar-me
+                </label>
+                <a href="#" class="forgot-password">Esqueceu a senha?</a>
+            </div>
+
+            <button type="submit" class="login-button" id="loginBtn">
+                Entrar
+            </button>
+        </form>
+
+        <div class="divider">
+            <span class="divider-text">Acesso Seguro</span>
+        </div>
+
+        <div class="footer-info">
+            <p class="footer-text">© 2025 Sistema EHS Dashboard</p>
+            <p class="footer-text">Criado por Gilvando Santana</p>
+            <p class="version-info">v2.1.0 - Julho 2025</p>
+        </div>
+    </div>
+
+    <script>
+        // Lista de emails autorizados (você pode expandir esta lista)
+        const authorizedEmails = [
+            'gilvando.santana@supportmining.com.br',
+            'edenildes@supportmining.com.br',
+            'vinicius@supportmining.com.br',
+            'vanderley@supportmining.com.br',
+            'agildo@mosaic.com'
+        ];
+
+        // Lista de senhas temporárias (APENAS para demonstração - use hash em produção)
+        const userCredentials = {
+            'gilvando.santana@supportmining.com.br': 'LOMEHS2025!',
+            'edenildes.silva@supportmining.com.br': 'LOMEHS2025!',
+            'vinicius.santos@supportmining.com.br': 'LOMEHS2025!',
+            'vanderley@supportmining.com.br': 'LOMEHS2025!',
+            'agildo@mosaic.com': 'LOMEHS2025!'
+        };
+
+        // Função para validar domínio do email
+        function isValidEmailDomain(email) {
+            const allowedDomains = ['supportmining.com.br', 'mosaic.com']; // Adicione seus domínios
+            const domain = email.split('@')[1];
+            return allowedDomains.includes(domain);
+        }
+
+        // Função para verificar se o email está na lista autorizada
+        function isAuthorizedEmail(email) {
+            return authorizedEmails.includes(email.toLowerCase());
+        }
+
+        // Função para mostrar mensagens de erro
+        function showError(message) {
+            // Remove erro anterior se existir
+            const existingError = document.querySelector('.error-message');
+            if (existingError) {
+                existingError.remove();
+            }
+
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error-message';
+            errorDiv.style.cssText = `
+                background: rgba(255, 69, 58, 0.1);
+                border: 1px solid rgba(255, 69, 58, 0.3);
+                color: #ff453a;
+                padding: 12px 16px;
+                border-radius: 8px;
+                margin-bottom: 20px;
+                font-size: 14px;
+                text-align: center;
+                animation: shake 0.5s ease-in-out;
+            `;
+            errorDiv.textContent = message;
+
+            const form = document.getElementById('loginForm');
+            form.insertBefore(errorDiv, form.firstChild);
+
+            // Remove a mensagem após 5 segundos
+            setTimeout(() => {
+                if (errorDiv.parentNode) {
+                    errorDiv.remove();
+                }
+            }, 5000);
+        }
+
+        // Função para mostrar mensagens de sucesso
+        function showSuccess(message) {
+            const existingSuccess = document.querySelector('.success-message');
+            if (existingSuccess) {
+                existingSuccess.remove();
+            }
+
+            const successDiv = document.createElement('div');
+            successDiv.className = 'success-message';
+            successDiv.style.cssText = `
+                background: rgba(52, 199, 89, 0.1);
+                border: 1px solid rgba(52, 199, 89, 0.3);
+                color: #34c759;
+                padding: 12px 16px;
+                border-radius: 8px;
+                margin-bottom: 20px;
+                font-size: 14px;
+                text-align: center;
+            `;
+            successDiv.textContent = message;
+
+            const form = document.getElementById('loginForm');
+            form.insertBefore(successDiv, form.firstChild);
+        }
+
+        // Adicionar animação de shake para erros
+        const shakeKeyframes = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                10%, 30%, 50%, 70%, 90% { transform: translateX(-3px); }
+                20%, 40%, 60%, 80% { transform: translateX(3px); }
+            }
+        `;
         
-        <!-- Página Principal -->
-        <div id="homePage">
-            <div class="header">
-                <h1>Controle EHS do Contrato LOM</h1>
-                <p>Sistema de Gestão de Segurança e Meio Ambiente</p>
-            </div>
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = shakeKeyframes;
+        document.head.appendChild(styleSheet);
+        function createParticles() {
+            const container = document.getElementById('backgroundAnimation');
+            const particleCount = 50;
 
-            <div class="current-page">
-                <h2>Sistema Integrado de Controle</h2>
-                <p>Selecione uma das opções abaixo para acessar os módulos do sistema</p>
-            </div>
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                const size = Math.random() * 6 + 2;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
+                
+                container.appendChild(particle);
+            }
+        }
 
-            <div class="menu-grid">
+        // Toggle para mostrar/ocultar senha
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleBtn = document.querySelector('.password-toggle');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleBtn.textContent = '🙈';
+            } else {
+                passwordInput.type = 'password';
+                toggleBtn.textContent = '👁️';
+            }
+        }
 
-                <a href="https://drive.google.com/drive/folders/1010q8CbYsNt3dwC1wOBQ1ASOUE00GN5N?usp=sharing" class="menu-card" onclick="showPage('apresentacao-ehs')" target="_blank">
-                    <div class="status-indicator"></div>
-                    <div class="menu-icon">📽️</div>
-                    <div class="menu-title">Apresentação de EHS</div>
-                    <div class="menu-description">Dashboards e relatórios de indicadores de segurança e meio ambiente</div>
-                </a>
+        // Manipulador do formulário de login
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const loginBtn = document.getElementById('loginBtn');
+            const email = document.getElementById('email').value.toLowerCase().trim();
+            const password = document.getElementById('password').value;
+            
+            // Validações de segurança
+            if (!email || !password) {
+                showError('Por favor, preencha todos os campos obrigatórios.');
+                return;
+            }
 
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSeMhoA4-y_jlKuYVeH_Jo-dWXxIeo-J9c1IfnZDERwm6pPajg/viewform" class="menu-card" onclick="showPage('cadastro-desvios')" target="_blank">
-                    <div class="status-indicator"></div>
-                    <div class="menu-icon">⚠️</div>
-                    <div class="menu-title">Casdastro de Desvios</div>
-                    <div class="menu-description">Gestão de não conformidades, desvios e ações corretivas</div>
-                </a>
+            // Verificar formato do email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showError('Por favor, digite um email válido.');
+                return;
+            }
 
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdEgHfk2FJaGk8B3QMfwEhkQINxeH5bG_Fk_RMRD-pU-0OOiQ/viewform" class="menu-card" onclick="showPage('cadastro-dialogos')" target="_blank">
-                    <div class="status-indicator"></div>
-                    <div class="menu-icon">💬</div>
-                    <div class="menu-title">Casdastro de Diálogos e Inspeções</div>
-                    <div class="menu-description">Registro e acompanhamento de diálogos de segurança e inspeções</div>
-                </a>
+            // Verificar domínio autorizado
+            if (!isValidEmailDomain(email)) {
+                showError('Domínio de email não autorizado. Use apenas emails corporativos.');
+                return;
+            }
 
-                <a href="https://drive.google.com/drive/folders/1DNsgSgX_9GvW0GC4_Ap2H50LDOY3Q2mr?usp=sharing" class="menu-card" onclick="showPage('controle-treinamentos')" target="_blank">
-                    <div class="status-indicator"></div>
-                    <div class="menu-icon">📚</div>
-                    <div class="menu-title">Controle Treinamentos</div>
-                    <div class="menu-description">Gestão completa de treinamentos de segurança, certificações e capacitações da equipe</div>
-                </a>
+            // Verificar se o email está na lista de autorizados
+            if (!isAuthorizedEmail(email)) {
+                showError('Email não autorizado. Entre em contato com o administrador do sistema.');
+                return;
+            }
 
-                <a href="https://drive.google.com/drive/folders/10OAYK-4psGKprD47xML05ce5fDbXU2YF?usp=sharing" class="menu-card" onclick="showPage('controle-veiculos')" target="_blank">
-                    <div class="status-indicator"></div>
-                    <div class="menu-icon">🚗</div>
-                    <div class="menu-title">Controle de Veículos e Condutores</div>
-                    <div class="menu-description">Gestão de frota, documentação e habilitação de condutores</div>
-                </a>
+            // Adicionar estado de loading
+            loginBtn.classList.add('loading');
+            loginBtn.textContent = '';
+            
+            // Simular processo de autenticação com delay realista
+            setTimeout(() => {
+                // Verificar credenciais
+                if (userCredentials[email] && userCredentials[email] === password) {
+                    showSuccess('Login realizado com sucesso! Redirecionando...');
+                    
+                    // Salvar informações de sessão (se checkbox marcado)
+                    if (document.getElementById('remember').checked) {
+                        localStorage.setItem('rememberedEmail', email);
+                        localStorage.setItem('loginTime', new Date().toISOString());
+                    }
+                    
+                    // Redirecionar após pequeno delay para mostrar sucesso
+                    setTimeout(() => {
+                        // window.location.href = 'index.html';
+                        window.location.href = 'homepage.html';
+                    }, 1500);
+                    
+                } else {
+                    showError('Email ou senha incorretos. Verifique suas credenciais.');
+                }
+                
+                // Remover estado de loading
+                loginBtn.classList.remove('loading');
+                loginBtn.textContent = 'ENTRAR';
+                
+            }, 1500); // Delay para simular verificação no servidor
+        });
 
-                <a href="ehs-portal.html" class="menu-card" onclick="showPage('ehs-portal')" target="_blank">
-                    <div class="status-indicator"></div>
-                    <div class="menu-icon">📊</div>
-                    <div class="menu-title">EHS Portal</div>
-                    <div class="menu-description">Sistema de controle dos colaboradores</div>
-                </a>
+        // Efeitos de foco nos inputs
+        document.querySelectorAll('.form-input').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.style.transform = 'scale(1.02)';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.parentElement.style.transform = 'scale(1)';
+            });
+        });
 
-                <a href="https://drive.google.com/drive/folders/1-0T76dA9I8ZDmby1yaLSULx5uCXq2NZH?usp=sharing" class="menu-card" onclick="showPage('fispq')" target="_blank">
-                    <div class="status-indicator"></div>
-                    <div class="menu-icon"><img src="FISPQ.ico" alt="#" class="img-icon"></div>
-                    <div class="menu-title">FISPQ / FDS</div>
-                    <div class="menu-description">Fichas de Informações de Segurança de Produtos Químicos / Fichas de Segurança</div>
-                </a>
+        // Carregar email lembrado se existir
+        window.addEventListener('load', function() {
+            createParticles();
+            
+            const rememberedEmail = localStorage.getItem('rememberedEmail');
+            if (rememberedEmail) {
+                document.getElementById('email').value = rememberedEmail;
+                document.getElementById('remember').checked = true;
+            }
+        });
 
-                <a href="https://drive.google.com/drive/folders/1-5H0IcY8rB8Dwl1D7pXFbi5M0qTG44Ry?usp=sharing" class="menu-card" onclick="showPage('iventario-içamento')" target="_blank">
-                    <div class="status-indicator"></div>
-                    <div class="menu-icon">📝</div>
-                    <div class="menu-title">Inventário de içamento</div>
-                    <div class="menu-description">Programação e controle de eventos semanais de segurança</div>
-                </a>
+        // Adicionar efeito de digitação suave
+        document.querySelectorAll('.form-input').forEach(input => {
+            input.addEventListener('input', function() {
+                if (this.value.length > 0) {
+                    this.style.borderColor = '#4ecdc4';
+                } else {
+                    this.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+                }
+            });
+        });
+    </script>
 
-                <a href="https://www.gov.br/trabalho-e-emprego/pt-br/assuntos/inspecao-do-trabalho/seguranca-e-saude-no-trabalho/ctpp-nrs/normas-regulamentadoras-nrs" class="menu-card" onclick="showPage('nrs')" target="_blank">
-                    <div class="status-indicator"></div>
-                    <div class="menu-icon"><img src="normas-seguranca-do-trabalho-nr-removebg-preview.ico" alt="#" class="img-icon"></div>
-                    <div class="menu-title">NRs</div>
-                    <div class="menu-description">Banco de dados das Normas Regulamentadoras aplicáveis</div>
-                </a>
-
-                <a href="https://pmdriver.com.br/Login.aspx" class="menu-card" onclick="showPage('pm-driver')" target="_blank">
-                    <div class="status-indicator"></div>
-                    <div class="menu-icon"><img src="LogoPMDriverMenu.ico" alt="#" class="img-icon"></div>
-                    <div class="menu-title">PM Driver</div>
-                    <div class="menu-description">Sistema de controle dos colaboradores</div>
-                </a>
-
-                <a href="https://drive.google.com/drive/folders/16HcA3xZTLV0uQ2tbVb25Z-vbUUzQwQbO?usp=sharing" class="menu-card" onclick="showPage('programa-padrinho')" target="_blank">
-                    <div class="status-indicator"></div>
-                    <div class="menu-icon">👥</div>
-                    <div class="menu-title">Programa Padrinho</div>
-                    <div class="menu-description">Sistema de mentoria e acompanhamento de novos colaboradores</div>
-                </a>
-                <a href="https://apps.rsdata.com.br/dataSEESMT/login.jsf" class="menu-card" onclick="showPage('programa-padrinho')" target="_blank">
-                    <div class="status-indicator"></div>
-                    <div class="menu-icon"><img src="logo_login_novo.ico" alt="#" class="img-icon"></div>
-                    <div class="menu-title">RS Data</div>
-                    <div class="menu-description">Sistema de mentoria e acompanhamento de novos colaboradores</div>
-                </a>
-
-            </div>
-        </div>
-        <div class="footer">
-            <p>&copy; 2025 Sistema EHS Dashboard - Todos os direitos reservados</p>
-            <p>Última atualização: Julho 2025</p>
-            <p>Criado por Gilvando Santana</p>
-        </div>
 </body>
+</html>
