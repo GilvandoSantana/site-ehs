@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Sistema EHS Dashboard</title>
+    <link rel="stylesheet" href="enc-loginpage.css">
+    <style >
+        
+    </style>
+</head>
+<body>
+    <div class="background-animation" id="backgroundAnimation"></div>
+    
+    <div class="login-container">
+        <div class="logo-section">
+            <div class="logo-icon"></div>
+            <h1 class="login-title">Encarregados</h1>
+        </div>
+
+        <form id="loginForm">
+            <div class="form-group">
+                <label class="form-label" for="email">Email</label>
+                <input type="email" id="email" name="email" class="form-input" 
+                       placeholder="Digite seu email corporativo" required>
+            </div>
+
+            <div class="form-group" style="position: relative;">
+                <label class="form-label" for="password">Senha</label>
+                <input type="password" id="password" name="password" class="form-input" 
+                       placeholder="Digite sua senha" required>
+                <button type="button" class="password-toggle" onclick="togglePassword()">👁️</button>
+            </div>
+
+            <div class="form-options">
+                <label class="remember-me">
+                    <input type="checkbox" id="remember">
+                    Lembrar-me
+                </label>
+                <a href="#" class="forgot-password">Esqueceu a senha?</a>
+            </div>
+
+            <button type="submit" class="login-button" id="loginBtn">
+                Entrar
+            </button>
+        </form>
+
+        <div class="divider">
+            <span class="divider-text">Acesso Seguro</span>
+        </div>
+
+        <div class="footer-info">
+            <p class="footer-text">© Todos os direitos reservados</p>
+            <p class="footer-text">Criado por Gilvando Santana</p>
+        </div>
+    </div>
+
+    <script>
+        // Lista de emails autorizados (você pode expandir esta lista)
+        const authorizedEmails = [
+            'gilvando.santana@supportmining.com.br',
+            'edenildes@supportmining.com.br',
+            'vinicius@supportmining.com.br',
+            'vanderley@supportmining.com.br',
+            'agildo@mosaic.com'
+        ];
+
+        // Lista de senhas temporárias (APENAS para demonstração - use hash em produção)
+        const userCredentials = {
+            'gilvando.santana@supportmining.com.br': 'LOMEHS2025!',
+            'edenildes.silva@supportmining.com.br': 'LOMEHS2025!',
+            'vinicius.santos@supportmining.com.br': 'LOMEHS2025!',
+            'vanderley@supportmining.com.br': 'LOMEHS2025!',
+            'agildo@mosaic.com': 'LOMEHS2025!'
+        };
+
+        // Função para validar domínio do email
+        function isValidEmailDomain(email) {
+            const allowedDomains = ['supportmining.com.br', 'mosaic.com']; // Adicione seus domínios
+            const domain = email.split('@')[1];
+            return allowedDomains.includes(domain);
+        }
+
+        // Função para verificar se o email está na lista autorizada
+        function isAuthorizedEmail(email) {
+            return authorizedEmails.includes(email.toLowerCase());
+        }
+
+        // Função para mostrar mensagens de erro
+        function showError(message) {
+            // Remove erro anterior se existir
+            const existingError = document.querySelector('.error-message');
+            if (existingError) {
+                existingError.remove();
+            }
+
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error-message';
+            errorDiv.style.cssText = `
+                background: rgba(255, 69, 58, 0.1);
+                border: 1px solid rgba(255, 69, 58, 0.3);
+                color: #ff453a;
+                padding: 12px 16px;
+                border-radius: 8px;
+                margin-bottom: 20px;
+                font-size: 14px;
+                text-align: center;
+                animation: shake 0.5s ease-in-out;
+            `;
+            errorDiv.textContent = message;
+
+            const form = document.getElementById('loginForm');
+            form.insertBefore(errorDiv, form.firstChild);
+
+            // Remove a mensagem após 5 segundos
+            setTimeout(() => {
+                if (errorDiv.parentNode) {
+                    errorDiv.remove();
+                }
+            }, 5000);
+        }
+
+        // Função para mostrar mensagens de sucesso
+        function showSuccess(message) {
+            const existingSuccess = document.querySelector('.success-message');
+            if (existingSuccess) {
+                existingSuccess.remove();
+            }
+
+            const successDiv = document.createElement('div');
+            successDiv.className = 'success-message';
+            successDiv.style.cssText = `
+                background: rgba(52, 199, 89, 0.1);
+                border: 1px solid rgba(52, 199, 89, 0.3);
+                color: #34c759;
+                padding: 12px 16px;
+                border-radius: 8px;
+                margin-bottom: 20px;
+                font-size: 14px;
+                text-align: center;
+            `;
+            successDiv.textContent = message;
+
+            const form = document.getElementById('loginForm');
+            form.insertBefore(successDiv, form.firstChild);
+        }
+
+        // Adicionar animação de shake para erros
+        const shakeKeyframes = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                10%, 30%, 50%, 70%, 90% { transform: translateX(-3px); }
+                20%, 40%, 60%, 80% { transform: translateX(3px); }
+            }
+        `;
+        
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = shakeKeyframes;
+        document.head.appendChild(styleSheet);
+        function createParticles() {
+            const container = document.getElementById('backgroundAnimation');
+            const particleCount = 50;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                const size = Math.random() * 6 + 2;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
+                
+                container.appendChild(particle);
+            }
+        }
+
+        // Toggle para mostrar/ocultar senha
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleBtn = document.querySelector('.password-toggle');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleBtn.textContent = '🙈';
+            } else {
+                passwordInput.type = 'password';
+                toggleBtn.textContent = '👁️';
+            }
+        }
+
+        // Manipulador do formulário de login
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const loginBtn = document.getElementById('loginBtn');
+            const email = document.getElementById('email').value.toLowerCase().trim();
+            const password = document.getElementById('password').value;
+            
+            // Validações de segurança
+            if (!email || !password) {
+                showError('Por favor, preencha todos os campos obrigatórios.');
+                return;
+            }
+
+            // Verificar formato do email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showError('Por favor, digite um email válido.');
+                return;
+            }
+
+            // Verificar domínio autorizado
+            if (!isValidEmailDomain(email)) {
+                showError('Domínio de email não autorizado. Use apenas emails corporativos.');
+                return;
+            }
+
+            // Verificar se o email está na lista de autorizados
+            if (!isAuthorizedEmail(email)) {
+                showError('Email não autorizado. Entre em contato com o administrador do sistema.');
+                return;
+            }
+
+            // Adicionar estado de loading
+            loginBtn.classList.add('loading');
+            loginBtn.textContent = '';
+            
+            // Simular processo de autenticação com delay realista
+            setTimeout(() => {
+                // Verificar credenciais
+                if (userCredentials[email] && userCredentials[email] === password) {
+                    showSuccess('Login realizado com sucesso! Redirecionando...');
+                    
+                    // Salvar informações de sessão (se checkbox marcado)
+                    if (document.getElementById('remember').checked) {
+                        localStorage.setItem('rememberedEmail', email);
+                        localStorage.setItem('loginTime', new Date().toISOString());
+                    }
+                    
+                    // Redirecionar após pequeno delay para mostrar sucesso
+                    setTimeout(() => {
+                        // window.location.href = 'index.html';
+                        window.location.href = 'ts-homepage.html';
+                    }, 1500);
+                    
+                } else {
+                    showError('Email ou senha incorretos. Verifique suas credenciais.');
+                }
+                
+                // Remover estado de loading
+                loginBtn.classList.remove('loading');
+                loginBtn.textContent = 'ENTRAR';
+                
+            }, 1500); // Delay para simular verificação no servidor
+        });
+
+        // Efeitos de foco nos inputs
+        document.querySelectorAll('.form-input').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.style.transform = 'scale(1.02)';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.parentElement.style.transform = 'scale(1)';
+            });
+        });
+
+        // Carregar email lembrado se existir
+        window.addEventListener('load', function() {
+            createParticles();
+            
+            const rememberedEmail = localStorage.getItem('rememberedEmail');
+            if (rememberedEmail) {
+                document.getElementById('email').value = rememberedEmail;
+                document.getElementById('remember').checked = true;
+            }
+        });
+
+        // Adicionar efeito de digitação suave
+        document.querySelectorAll('.form-input').forEach(input => {
+            input.addEventListener('input', function() {
+                if (this.value.length > 0) {
+                    this.style.borderColor = '#4ecdc4';
+                } else {
+                    this.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
