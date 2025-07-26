@@ -15,20 +15,20 @@
     <div class="login-container">
         <div class="logo-section">
             <div class="logo-icon"></div>
-            <h1 class="login-title">Técnicos em Segurnaça</h1>
+            <h1 class="login-title">Técnicos em Segurança</h1>
         </div>
 
         <form id="loginForm">
             <div class="form-group">
-                <label class="form-label" for="email">Email</label>
-                <input type="email" id="email" name="email" class="form-input" 
-                       placeholder="Digite seu email corporativo" required>
+                <label class="form-label" for="firstName">Primeiro Nome</label>
+                <input type="text" id="firstName" name="firstName" class="form-input" 
+                       placeholder="Digite seu primeiro nome" required>
             </div>
 
             <div class="form-group" style="position: relative;">
                 <label class="form-label" for="password">Senha</label>
                 <input type="password" id="password" name="password" class="form-input" 
-                       placeholder="Digite sua senha" required>
+                       placeholder="CPF - Apenas números" required>
                 <button type="button" class="password-toggle" onclick="togglePassword()">👁️</button>
             </div>
 
@@ -56,34 +56,27 @@
     </div>
 
     <script>
-        // Lista de emails autorizados (você pode expandir esta lista)
-        const authorizedEmails = [
-            'gilvando.santana@supportmining.com.br',
-            'edenildes@supportmining.com.br',
-            'vinicius@supportmining.com.br',
-            'vanderley@supportmining.com.br',
-            'agildo@mosaic.com'
+        // Lista de primeiros nomes autorizados
+        const authorizedNames = [
+            'gilvando',
+            'edenildes',
+            'vinicius',
+            'vanderley',
+            'agildo'
         ];
 
-        // Lista de senhas temporárias (APENAS para demonstração - use hash em produção)
+        // Lista de credenciais por primeiro nome
         const userCredentials = {
-            'gilvando.santana@supportmining.com.br': 'LOMEHS2025!',
-            'edenildes.silva@supportmining.com.br': 'LOMEHS2025!',
-            'vinicius.santos@supportmining.com.br': 'LOMEHS2025!',
-            'vanderley@supportmining.com.br': 'LOMEHS2025!',
-            'agildo@mosaic.com': 'LOMEHS2025!'
+            'gilvando': '08412246500',
+            'edenildes': '04655292598',
+            'vinicius': '04655292598',
+            'vanderley': '04655292598',
+            'agildo': '04655292598'
         };
 
-        // Função para validar domínio do email
-        function isValidEmailDomain(email) {
-            const allowedDomains = ['supportmining.com.br', 'mosaic.com']; // Adicione seus domínios
-            const domain = email.split('@')[1];
-            return allowedDomains.includes(domain);
-        }
-
-        // Função para verificar se o email está na lista autorizada
-        function isAuthorizedEmail(email) {
-            return authorizedEmails.includes(email.toLowerCase());
+        // Função para verificar se o nome está na lista autorizada
+        function isAuthorizedName(firstName) {
+            return authorizedNames.includes(firstName.toLowerCase());
         }
 
         // Função para mostrar mensagens de erro
@@ -157,6 +150,7 @@
         const styleSheet = document.createElement('style');
         styleSheet.textContent = shakeKeyframes;
         document.head.appendChild(styleSheet);
+        
         function createParticles() {
             const container = document.getElementById('backgroundAnimation');
             const particleCount = 50;
@@ -195,31 +189,25 @@
             e.preventDefault();
             
             const loginBtn = document.getElementById('loginBtn');
-            const email = document.getElementById('email').value.toLowerCase().trim();
+            const firstName = document.getElementById('firstName').value.toLowerCase().trim();
             const password = document.getElementById('password').value;
             
             // Validações de segurança
-            if (!email || !password) {
+            if (!firstName || !password) {
                 showError('Por favor, preencha todos os campos obrigatórios.');
                 return;
             }
 
-            // Verificar formato do email
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                showError('Por favor, digite um email válido.');
+            // Verificar se contém apenas letras (primeiro nome)
+            const nameRegex = /^[a-záàâãéèêíïóôõöúçñ\s]+$/i;
+            if (!nameRegex.test(firstName)) {
+                showError('Por favor, digite apenas letras no primeiro nome.');
                 return;
             }
 
-            // Verificar domínio autorizado
-            if (!isValidEmailDomain(email)) {
-                showError('Domínio de email não autorizado. Use apenas emails corporativos.');
-                return;
-            }
-
-            // Verificar se o email está na lista de autorizados
-            if (!isAuthorizedEmail(email)) {
-                showError('Email não autorizado. Entre em contato com o administrador do sistema.');
+            // Verificar se o nome está na lista de autorizados
+            if (!isAuthorizedName(firstName)) {
+                showError('Primeiro nome não autorizado. Entre em contato com o administrador do sistema.');
                 return;
             }
 
@@ -230,12 +218,12 @@
             // Simular processo de autenticação com delay realista
             setTimeout(() => {
                 // Verificar credenciais
-                if (userCredentials[email] && userCredentials[email] === password) {
+                if (userCredentials[firstName] && userCredentials[firstName] === password) {
                     showSuccess('Login realizado com sucesso! Redirecionando...');
                     
                     // Salvar informações de sessão (se checkbox marcado)
                     if (document.getElementById('remember').checked) {
-                        localStorage.setItem('rememberedEmail', email);
+                        localStorage.setItem('rememberedName', firstName);
                         localStorage.setItem('loginTime', new Date().toISOString());
                     }
                     
@@ -246,7 +234,7 @@
                     }, 1500);
                     
                 } else {
-                    showError('Email ou senha incorretos. Verifique suas credenciais.');
+                    showError('Primeiro nome ou senha incorretos. Verifique suas credenciais.');
                 }
                 
                 // Remover estado de loading
@@ -267,13 +255,13 @@
             });
         });
 
-        // Carregar email lembrado se existir
+        // Carregar nome lembrado se existir
         window.addEventListener('load', function() {
             createParticles();
             
-            const rememberedEmail = localStorage.getItem('rememberedEmail');
-            if (rememberedEmail) {
-                document.getElementById('email').value = rememberedEmail;
+            const rememberedName = localStorage.getItem('rememberedName');
+            if (rememberedName) {
+                document.getElementById('firstName').value = rememberedName;
                 document.getElementById('remember').checked = true;
             }
         });
